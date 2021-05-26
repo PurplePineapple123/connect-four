@@ -3,13 +3,13 @@
 class GameBoard
   def initialize
     @board = []
+    @both_diagonals = []
   end
 
   def create_board
     @board = [[".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
               [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
-              [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
-              [".", ".", ".", ".", ".", ".", "."]]
+              [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."]]
   end
 
   def display_board(board = @board)
@@ -80,44 +80,106 @@ class PlayGame < GameBoard
   def winning_combo
     winning = [["x", "x", "x", "x"], ["y", "y", "y", "y"]]
 
+    x_win = "\"x\", \"x\", \"x\", \"x\""
+    y_win = "\"y\", \"y\", \"y\", \"y\""
+    
+
     @board.each do |row|
-      if (winning[0] - row).empty?
+      if row.to_s.include? (x_win)
         puts "Player 1 wins"
         exit
-      elsif (winning[1] - row).empty?
+      elsif row.to_s.include? (y_win)
         puts "Player 2 wins"
         exit
       end
     end
 
     @board.transpose.each do |column|
-      if (winning[0] - column).empty?
-        puts "Player 1 wins B"
+      if column.to_s.include? (x_win)
+        puts "Player 1 wins"
         exit
-      elsif (winning[1] - column).empty?
+      elsif column.to_s.include? (y_win)
+        puts "Player 2 wins"
+        exit
+      end
+    end
+
+    diagonal_wins
+
+    @both_diagonals.each do |diagonal|
+      if diagonal.to_s.include? (x_win)
+        puts "Player 1 wins"
+        exit
+      elsif diagonal.to_s.include? (y_win)
         puts "Player 2 wins"
         exit
       end
     end
   end
+
+  def diagonal_wins
+    padding = [*0..(@board.length - 1)].map { |i| [nil] * i }
+
+    padded_left = padding.reverse.zip(@board).zip(padding).map(&:flatten)
+    padded_right = padding.zip(@board).zip(padding.reverse).map(&:flatten)
+
+    diagonal_left = padded_left.transpose.map(&:compact)
+    diagonal_right = padded_right.transpose.map(&:compact)
+
+    @both_diagonals = diagonal_left, diagonal_right
+
+    #print @both_diagonals
+  end
+
+  def play_game
+    create_board
+    display_board
+
+    loop do
+      player_one_selection
+      insert_circle_player_one
+      winning_combo
+
+      player_two_selection
+      insert_circle_player_two
+      winning_combo
+    end
+  end
 end
 
 test = PlayGame.new
-test.create_board
-test.display_board
+test.play_game
 
-test.player_one_selection
-test.insert_circle_player_one
+# test.create_board
+# test.display_board
 
-test.player_one_selection
-test.insert_circle_player_one
+# test.player_one_selection
+# test.insert_circle_player_one
 
-test.player_one_selection
-test.insert_circle_player_one
+# test.player_two_selection
+# test.insert_circle_player_two
 
-test.player_one_selection
-test.insert_circle_player_one
-test.winning_combo
+# test.player_one_selection
+# test.insert_circle_player_one
+
+# test.player_two_selection
+# test.insert_circle_player_two
+
+# test.player_one_selection
+# test.insert_circle_player_one
+
+# test.player_two_selection
+# test.insert_circle_player_two
+
+# test.player_one_selection
+# test.insert_circle_player_one
+
+# test.player_two_selection
+# test.insert_circle_player_two
+
+# test.diagonal_wins
+
+#test.winning_combo
 
 # test.player_two_selection
 # test.insert_circle_player_two
