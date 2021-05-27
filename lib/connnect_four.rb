@@ -1,13 +1,12 @@
 #lib/connect_four.rb
 
 class GameBoard
-  
   attr_reader :board
 
   def initialize
     @board = [[".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."]]
+              [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
+              [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."]]
   end
 
   def display_board(board = @board)
@@ -21,10 +20,8 @@ class GameBoard
   end
 end
 
-class PlayGame 
-  def initialize (game_board = GameBoard.new)
-    # @player_1 = 0
-    # @player_2 = 0
+class PlayGame
+  def initialize(game_board = GameBoard.new)
     @game_board = game_board
     @both_diagonals = []
   end
@@ -53,7 +50,6 @@ class PlayGame
     end
   end
 
-
   def valid_move_player_one
     until @game_board.board[5][@player_1 - 1] == "."
       puts "Please place piece in valid spot"
@@ -64,14 +60,12 @@ class PlayGame
   def insert_circle_player_one
     valid_move_player_one
 
-
     @game_board.board.each do |num|
       if num[@player_1 - 1] == "."
         num[@player_1 - 1] = "x"
         break
       end
     end
-
 
     @game_board.display_board
   end
