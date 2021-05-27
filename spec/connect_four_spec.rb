@@ -47,12 +47,38 @@ describe PlayGame do
     end
   end
 
+
+
+
+
+
+
+  describe "#valid_move_player_one" do
+    subject(:valid_move) { described_class.new }
+
+    context "when player one makes a valid move" do
+      before do
+        
+      end
+
+      it "does not output error message" do
+        expect(valid_move).not_to receive(:puts)
+        valid_move.valid_move_player_one
+      end
+    end
+  end
+
+
+
+
+
+
   describe "#insert_circle_player_one" do
     subject(:insert_piece) { described_class.new }
 
     before do
+      allow(insert_piece).to receive(:valid_move_player_one)
       allow(insert_piece).to receive(:display_board)
-      allow(insert_piece).to receive(:player_one_selection).and_return(5)
     end
 
     context "when player 1 selects column 4" do
@@ -63,10 +89,10 @@ describe PlayGame do
   end
 
   describe "#winning_combo" do
-    subject(:end_game) {described_class.new}
+    subject(:end_game) { described_class.new }
 
     context "when 4 in a row" do
-      it "returns a winner" do
+      xit "returns a winner" do
         game_over = end_game.winning_combo
         expect(game_over).to eq(true)
       end

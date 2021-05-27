@@ -1,6 +1,9 @@
 #lib/connect_four.rb
 
 class GameBoard
+  
+  attr_reader :board
+
   def initialize
     @board = []
     @both_diagonals = []
@@ -25,13 +28,12 @@ end
 
 class PlayGame < GameBoard
   def initialize
-    @player_1
-    @player_2
+    @player_1 = 0
+    @player_2 = 0
   end
 
   def player_one_selection
     puts "Choose a column, Player 1:"
-
     loop do
       user_input = gets.chomp
       @player_1 = user_input.to_i if user_input.match?(/\b[1-7]\b/)
@@ -54,7 +56,26 @@ class PlayGame < GameBoard
     end
   end
 
+
+
+
+
+
+
+  def valid_move_player_one
+    until @board[5][@player_1 - 1] == "."
+      puts "Please place piece in valid spot"
+      player_one_selection
+    end
+  end
+
+
+
+
+
   def insert_circle_player_one
+    valid_move_player_one
+
     @board.each do |num|
       if num[@player_1 - 1] == "."
         num[@player_1 - 1] = "x"
@@ -65,24 +86,29 @@ class PlayGame < GameBoard
     display_board(@board)
   end
 
+  def valid_move_player_two
+    until @board[5][@player_2 - 1] == "."
+      puts "Please place piece in valid spot"
+      player_two_selection
+    end
+  end
+
   def insert_circle_player_two
+    valid_move_player_two
+
     @board.each do |num|
       if num[@player_2 - 1] == "."
         num[@player_2 - 1] = "y"
         break
       end
     end
+
     display_board(@board)
   end
 
-  #check_for_winning method (do until one player had 4 in a row)
-
   def winning_combo
-    winning = [["x", "x", "x", "x"], ["y", "y", "y", "y"]]
-
     x_win = "\"x\", \"x\", \"x\", \"x\""
     y_win = "\"y\", \"y\", \"y\", \"y\""
-    
 
     @board.each do |row|
       if row.to_s.include? (x_win)
@@ -121,14 +147,13 @@ class PlayGame < GameBoard
     padding = [*0..(@board.length - 1)].map { |i| [nil] * i }
 
     padded_left = padding.reverse.zip(@board).zip(padding).map(&:flatten)
+
     padded_right = padding.zip(@board).zip(padding.reverse).map(&:flatten)
 
     diagonal_left = padded_left.transpose.map(&:compact)
     diagonal_right = padded_right.transpose.map(&:compact)
 
     @both_diagonals = diagonal_left, diagonal_right
-
-    #print @both_diagonals
   end
 
   def play_game
@@ -147,39 +172,7 @@ class PlayGame < GameBoard
   end
 end
 
-test = PlayGame.new
-test.play_game
+# test = PlayGame.new
 
+# test.play_game
 # test.create_board
-# test.display_board
-
-# test.player_one_selection
-# test.insert_circle_player_one
-
-# test.player_two_selection
-# test.insert_circle_player_two
-
-# test.player_one_selection
-# test.insert_circle_player_one
-
-# test.player_two_selection
-# test.insert_circle_player_two
-
-# test.player_one_selection
-# test.insert_circle_player_one
-
-# test.player_two_selection
-# test.insert_circle_player_two
-
-# test.player_one_selection
-# test.insert_circle_player_one
-
-# test.player_two_selection
-# test.insert_circle_player_two
-
-# test.diagonal_wins
-
-#test.winning_combo
-
-# test.player_two_selection
-# test.insert_circle_player_two
