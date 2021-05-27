@@ -5,14 +5,9 @@ class GameBoard
   attr_reader :board
 
   def initialize
-    @board = []
-    @both_diagonals = []
-  end
-
-  def create_board
     @board = [[".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
-              [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
-              [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."]]
+    [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", ".", "."]]
   end
 
   def display_board(board = @board)
@@ -26,10 +21,12 @@ class GameBoard
   end
 end
 
-class PlayGame < GameBoard
-  def initialize
-    @player_1 = 0
-    @player_2 = 0
+class PlayGame 
+  def initialize (game_board = GameBoard.new)
+    # @player_1 = 0
+    # @player_2 = 0
+    @game_board = game_board
+    @both_diagonals = []
   end
 
   def player_one_selection
@@ -57,37 +54,30 @@ class PlayGame < GameBoard
   end
 
 
-
-
-
-
-
   def valid_move_player_one
-    until @board[5][@player_1 - 1] == "."
+    until @game_board.board[5][@player_1 - 1] == "."
       puts "Please place piece in valid spot"
       player_one_selection
     end
   end
 
-
-
-
-
   def insert_circle_player_one
     valid_move_player_one
 
-    @board.each do |num|
+
+    @game_board.board.each do |num|
       if num[@player_1 - 1] == "."
         num[@player_1 - 1] = "x"
         break
       end
     end
 
-    display_board(@board)
+
+    @game_board.display_board
   end
 
   def valid_move_player_two
-    until @board[5][@player_2 - 1] == "."
+    until @game_board.board[5][@player_2 - 1] == "."
       puts "Please place piece in valid spot"
       player_two_selection
     end
@@ -96,21 +86,21 @@ class PlayGame < GameBoard
   def insert_circle_player_two
     valid_move_player_two
 
-    @board.each do |num|
+    @game_board.board.each do |num|
       if num[@player_2 - 1] == "."
         num[@player_2 - 1] = "y"
         break
       end
     end
 
-    display_board(@board)
+    @game_board.display_board
   end
 
   def winning_combo
     x_win = "\"x\", \"x\", \"x\", \"x\""
     y_win = "\"y\", \"y\", \"y\", \"y\""
 
-    @board.each do |row|
+    @game_board.board.each do |row|
       if row.to_s.include? (x_win)
         puts "Player 1 wins"
         exit
@@ -120,7 +110,7 @@ class PlayGame < GameBoard
       end
     end
 
-    @board.transpose.each do |column|
+    @game_board.board.transpose.each do |column|
       if column.to_s.include? (x_win)
         puts "Player 1 wins"
         exit
@@ -144,11 +134,11 @@ class PlayGame < GameBoard
   end
 
   def diagonal_wins
-    padding = [*0..(@board.length - 1)].map { |i| [nil] * i }
+    padding = [*0..(@game_board.board.length - 1)].map { |i| [nil] * i }
 
-    padded_left = padding.reverse.zip(@board).zip(padding).map(&:flatten)
+    padded_left = padding.reverse.zip(@game_board.board).zip(padding).map(&:flatten)
 
-    padded_right = padding.zip(@board).zip(padding.reverse).map(&:flatten)
+    padded_right = padding.zip(@game_board.board).zip(padding.reverse).map(&:flatten)
 
     diagonal_left = padded_left.transpose.map(&:compact)
     diagonal_right = padded_right.transpose.map(&:compact)
@@ -157,8 +147,7 @@ class PlayGame < GameBoard
   end
 
   def play_game
-    create_board
-    display_board
+    @game_board.display_board
 
     loop do
       player_one_selection
@@ -172,7 +161,5 @@ class PlayGame < GameBoard
   end
 end
 
-# test = PlayGame.new
-
-# test.play_game
-# test.create_board
+test = PlayGame.new
+test.play_game
