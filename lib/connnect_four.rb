@@ -7,6 +7,8 @@ class PlayGame
     @game_board = game_board
     @both_diagonals = []
     @player_turn = 1
+    @x_win = "\"x\", \"x\", \"x\", \"x\""
+    @y_win = "\"y\", \"y\", \"y\", \"y\""
   end
 
   def player_selection
@@ -37,40 +39,12 @@ class PlayGame
   end
 
   def winning_combo
-    x_win = "\"x\", \"x\", \"x\", \"x\""
-    y_win = "\"y\", \"y\", \"y\", \"y\""
-
-    @game_board.board.each do |row|
-      if row.to_s.include? (x_win)
-        puts "Player 1 wins"
-        exit
-      elsif row.to_s.include? (y_win)
-        puts "Player 2 wins"
-        exit
-      end
-    end
-
-    @game_board.board.transpose.each do |column|
-      if column.to_s.include? (x_win)
-        puts "Player 1 wins"
-        exit
-      elsif column.to_s.include? (y_win)
-        puts "Player 2 wins"
-        exit
-      end
-    end
+   
+    row_win_check
+    column_win_check
 
     diagonal_wins
-
-    @both_diagonals.each do |diagonal|
-      if diagonal.to_s.include? (x_win)
-        puts "Player 1 wins"
-        exit
-      elsif diagonal.to_s.include? (y_win)
-        puts "Player 2 wins"
-        exit
-      end
-    end
+    diagonal_win_check
   end
 
   def diagonal_wins
@@ -95,6 +69,45 @@ class PlayGame
      winning_combo
     end
   end
+
+  private
+
+  def row_win_check
+    @game_board.board.each do |row|
+      if row.to_s.include? (@x_win)
+        puts "Player 1 wins"
+        exit
+      elsif row.to_s.include? (@y_win)
+        puts "Player 2 wins"
+        exit
+      end
+    end
+  end
+
+  def column_win_check
+    @game_board.board.transpose.each do |column|
+      if column.to_s.include? (@x_win)
+        puts "Player 1 wins"
+        exit
+      elsif column.to_s.include? (@y_win)
+        puts "Player 2 wins"
+        exit
+      end
+    end
+  end
+
+  def diagonal_win_check
+    @both_diagonals.each do |diagonal|
+      if diagonal.to_s.include? (@x_win)
+        puts "Player 1 wins"
+        exit
+      elsif diagonal.to_s.include? (@y_win)
+        puts "Player 2 wins"
+        exit
+      end
+    end
+  end
+
 end
 
 test = PlayGame.new
