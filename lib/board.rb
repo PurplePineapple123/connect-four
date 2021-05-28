@@ -16,4 +16,17 @@ class GameBoard
     puts "| #{board[0][0]} | #{board[0][1]} | #{board[0][2]} | #{board[0][3]} | #{board[0][4]} | #{board[0][5]} | #{board[0][6]} |"
     puts "  1 | 2 | 3 | 4 | 5 | 6 | 7  "
   end
+
+  def update_board(player, player_turn)
+    @board.each do |num|
+      if num[player - 1] == '.' && player_turn == 1
+        num[player - 1] = 'x'
+        break
+      elsif num[player - 1] == '.' && player_turn == 2
+        num[player - 1] = 'y'
+        break
+      end
+    end
+  end
+
 end

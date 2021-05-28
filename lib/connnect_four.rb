@@ -19,7 +19,6 @@ class PlayGame
       else
         puts 'Error: Add number between 1-7'
       end
-
     end
   end
 
@@ -32,16 +31,7 @@ class PlayGame
 
   def insert_circle
     valid_vertical_move
-
-    @game_board.board.each do |num|
-      if num[@player - 1] == '.' && @player_turn == 1
-        num[@player - 1] = 'x'
-        break
-      elsif num[@player - 1] == '.' && @player_turn == 2
-        num[@player - 1] = 'y' 
-        break
-      end
-    end
+    @game_board.update_board(@player, @player_turn)
     @game_board.display_board
     @player_turn == 1 ? @player_turn = 2 : @player_turn = 1
   end
