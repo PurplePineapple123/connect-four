@@ -2,8 +2,8 @@
 
 require_relative "board.rb"
 
-class PlayGame
-  def initialize(game_board = GameBoard.new)
+class Game
+  def initialize(game_board = Board.new)
     @game_board = game_board
     @both_diagonals = []
     @player_turn = 1
@@ -110,5 +110,5 @@ class PlayGame
 
 end
 
-test = PlayGame.new
+test = Game.new
 test.play_game

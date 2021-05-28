@@ -1,6 +1,6 @@
 
 #Connect Four Board
-class GameBoard
+class Board
   attr_reader :board
 
   def initialize
