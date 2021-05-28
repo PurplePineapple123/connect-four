@@ -1,91 +1,49 @@
 # lib/connect_four.rb
 
-class GameBoard
-  attr_reader :board
-
-  def initialize
-    @board = Array.new(6) { Array.new(['.', '.', '.', '.', '.', '.', '.']) }
-  end
-
-  def display_board(board = @board)
-    puts "| #{board[5][0]} | #{board[5][1]} | #{board[5][2]} | #{board[5][3]} | #{board[5][4]} | #{board[5][5]} | #{board[5][6]} |"
-    puts "| #{board[4][0]} | #{board[4][1]} | #{board[4][2]} | #{board[4][3]} | #{board[4][4]} | #{board[4][5]} | #{board[4][6]} |"
-    puts "| #{board[3][0]} | #{board[3][1]} | #{board[3][2]} | #{board[3][3]} | #{board[3][4]} | #{board[3][5]} | #{board[3][6]} |"
-    puts "| #{board[2][0]} | #{board[2][1]} | #{board[2][2]} | #{board[2][3]} | #{board[2][4]} | #{board[2][5]} | #{board[2][6]} |"
-    puts "| #{board[1][0]} | #{board[1][1]} | #{board[1][2]} | #{board[1][3]} | #{board[1][4]} | #{board[1][5]} | #{board[1][6]} |"
-    puts "| #{board[0][0]} | #{board[0][1]} | #{board[0][2]} | #{board[0][3]} | #{board[0][4]} | #{board[0][5]} | #{board[0][6]} |"
-    puts "  1 | 2 | 3 | 4 | 5 | 6 | 7  "
-  end
-end
+require_relative "board.rb"
 
 class PlayGame
   def initialize(game_board = GameBoard.new)
     @game_board = game_board
     @both_diagonals = []
+    @player_turn = 1
   end
 
-  def player_one_selection
-    puts "Choose a column, Player 1:"
+  def player_selection
     loop do
-      user_input = gets.chomp
-      @player_1 = user_input.to_i if user_input.match?(/\b[1-7]\b/)
-      return @player_1 if @player_1
+      puts "Choose a column, Player #{@player_turn}:"
+      @user_input = gets.chomp
 
-      puts "Error: Add number between 1-7"
-    end
-  end
-
-  def player_two_selection
-    puts "Choose a column, Player 2:"
-
-    loop do
-      user_input = gets.chomp
-
-      @player_2 = user_input.to_i if user_input.match?(/\b[1-7]\b/)
-      return @player_2 if @player_2
-
-      puts "Error: Add number between 1-7"
-    end
-  end
-
-  def valid_move_player_one
-    until @game_board.board[5][@player_1 - 1] == "."
-      puts "Please place piece in valid spot"
-      player_one_selection
-    end
-  end
-
-  def insert_circle_player_one
-    valid_move_player_one
-
-    @game_board.board.each do |num|
-      if num[@player_1 - 1] == "."
-        num[@player_1 - 1] = "x"
-        break
+      if @user_input.match?(/\b[1-7]\b/)
+        return @player = @user_input.to_i
+      else
+        puts 'Error: Add number between 1-7'
       end
-    end
 
-    @game_board.display_board
+    end
   end
 
-  def valid_move_player_two
-    until @game_board.board[5][@player_2 - 1] == '.'
+  def valid_vertical_move
+    until @game_board.board[5][@player - 1] == '.'
       puts 'Please place piece in valid spot'
-      player_two_selection
+      player_selection
     end
   end
 
-  def insert_circle_player_two
-    valid_move_player_two
+  def insert_circle
+    valid_vertical_move
 
     @game_board.board.each do |num|
-      if num[@player_2 - 1] == "."
-        num[@player_2 - 1] = "y"
+      if num[@player - 1] == '.' && @player_turn == 1
+        num[@player - 1] = 'x'
+        break
+      elsif num[@player - 1] == '.' && @player_turn == 2
+        num[@player - 1] = 'y' 
         break
       end
     end
-
     @game_board.display_board
+    @player_turn == 1 ? @player_turn = 2 : @player_turn = 1
   end
 
   def winning_combo
@@ -142,13 +100,9 @@ class PlayGame
     @game_board.display_board
 
     loop do
-      player_one_selection
-      insert_circle_player_one
-      winning_combo
-
-      player_two_selection
-      insert_circle_player_two
-      winning_combo
+     player_selection
+     insert_circle
+     winning_combo
     end
   end
 end
