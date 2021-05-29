@@ -1,6 +1,6 @@
 # lib/connect_four.rb
 
-require_relative "board.rb"
+require_relative 'board.rb'
 
 class Game
   def initialize(game_board = Board.new)
@@ -42,8 +42,6 @@ class Game
    
     row_win_check
     column_win_check
-
-    diagonal_wins
     diagonal_win_check
   end
 
@@ -97,6 +95,8 @@ class Game
   end
 
   def diagonal_win_check
+    diagonal_wins
+
     @both_diagonals.each do |diagonal|
       if diagonal.to_s.include? (@x_win)
         puts "Player 1 wins"
@@ -110,5 +110,3 @@ class Game
 
 end
 
-test = Game.new
-test.play_game

@@ -20,11 +20,9 @@ class Board
   def update_board(player, player_turn)
     @board.each do |num|
       if num[player - 1] == '.' && player_turn == 1
-        num[player - 1] = 'x'
-        break
+        return num[player - 1] = 'x'
       elsif num[player - 1] == '.' && player_turn == 2
-        num[player - 1] = 'y'
-        break
+        return num[player - 1] = 'y'
       end
     end
   end
