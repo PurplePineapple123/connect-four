@@ -48,7 +48,8 @@ describe Game do
 
         allow(new_board).to receive(:board).and_return(board)
 
-        allow(valid_move).to receive(:player_selection).and_return(1)
+
+        #allow(valid_move).to receive(:player_selection).and_return(1)
       end
 
       it 'does not receive error message' do
