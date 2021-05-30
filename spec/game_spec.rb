@@ -34,67 +34,58 @@ describe Game do
   end
 
   describe '#valid_vertical_move' do
-    context '' do
-      it '' do
-        
-      end
-    end
-  end
 
-  describe "#player_two selection" do
-    context "prompts player 2 to select a slot (1-7)" do
-      subject(:play_game) { described_class.new }
+    subject(:valid_move) { described_class.new(new_board) }
+    let(:new_board) {instance_double(Board)}
+
+    context 'when a valid move is placed' do
 
       before do
-        allow(play_game).to receive(:puts)
-        allow(play_game).to receive(:gets).and_return("3")
+
+        board = [['x', '.', '.', '.', '.', '.', '.'], ['x', '.', '.', '.', '.', '.', '.'],
+        ['x', '.', '.', '.', '.', '.', '.'], ['x', '.', '.', '.', '.', '.', '.'],
+        ['x', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.']]
+
+        allow(new_board).to receive(:board).and_return(board)
+
+        allow(valid_move).to receive(:player_selection).and_return(1)
       end
 
-      xit "stores their response" do
-        player_input = play_game.player_one_selection
-        expect(player_input).to eq(3)
-      end
-    end
-  end
-
-  describe "#valid_move_player_one" do
-    subject(:valid_move) { described_class.new }
-
-    context "when player one makes a valid move" do
-      before do
-
-      end
-
-      xit "does not output error message" do
+      it 'does not receive error message' do
         expect(valid_move).not_to receive(:puts)
-        valid_move.valid_move_player_one
+        valid_move.valid_vertical_move
+      
       end
     end
   end
 
-  describe "#insert_circle_player_one" do
-    subject(:insert_piece) { described_class.new }
+
+  describe '#insert_circle' do
+    let(:board) { instance_double(Board) }
+
+    subject(:insert_piece) { described_class.new(board) }
 
     before do
-      allow(insert_piece).to receive(:valid_move_player_one)
-      allow(insert_piece).to receive(:display_board)
+      allow(insert_piece).to receive(:valid_vertical_move)
+      allow(board).to receive(:update_board).and_return('x')
+      allow(board).to receive(:display_board)
     end
 
-    context "when player 1 selects column 4" do
-      xit "adds the player's circle piece to column 4" do
-        expect(insert_piece)
+    context 'when player adds the  piece to column' do
+      it 'game changes turn to next player' do
+        next_turn = insert_piece.insert_circle 
+        expect(next_turn).to eq(2)
       end
     end
   end
 
-  describe "#winning_combo" do
-    subject(:end_game) { described_class.new }
-
-    context "when 4 in a row" do
-      xit "returns a winner" do
-        game_over = end_game.winning_combo
-        expect(game_over).to eq(true)
+  describe '#diagonal_wins' do
+    context '' do
+      xit '' do
       end
     end
   end
+
+
+
 end

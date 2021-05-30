@@ -16,8 +16,8 @@ describe Board do
   describe "#update_board" do
     subject(:update) { described_class.new }
 
-    context "when player 1 inputs a valid move" do
-      it "expect x to be added to board" do
+    context 'when player 1 inputs a valid move' do
+      it 'expect x to be added to board' do
         x_move = update.update_board(4, 1)
         expect(x_move).to eq("x")
       end
@@ -35,7 +35,7 @@ describe Board do
       before do
        
       end
-      it 'does not add a piece to the board' do
+      xit 'does not add a piece to the board' do
         full_column = update.update_board(1, 1)
         expect(full_column).to eq nil
       end

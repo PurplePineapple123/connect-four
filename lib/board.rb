@@ -1,10 +1,9 @@
-
 #Connect Four Board
 class Board
   attr_reader :board
 
-  def initialize
-    @board = Array.new(6) { Array.new(['.', '.', '.', '.', '.', '.', '.']) }
+  def initialize(board = Array.new(6) { Array.new(['.', '.', '.', '.', '.', '.', '.']) })
+    @board = board
   end
 
   def display_board(board = @board)
@@ -16,6 +15,9 @@ class Board
     puts "| #{board[0][0]} | #{board[0][1]} | #{board[0][2]} | #{board[0][3]} | #{board[0][4]} | #{board[0][5]} | #{board[0][6]} |"
     puts "  1 | 2 | 3 | 4 | 5 | 6 | 7  "
   end
+
+  
+
 
   def update_board(player, player_turn)
     @board.each do |num|
