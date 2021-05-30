@@ -49,7 +49,7 @@ describe Game do
         allow(new_board).to receive(:board).and_return(board)
 
 
-        #allow(valid_move).to receive(:player_selection).and_return(1)
+        allow(valid_move).to receive(:player_selection).and_return(1)
       end
 
       it 'does not receive error message' do
@@ -80,9 +80,13 @@ describe Game do
     end
   end
 
-  describe '#diagonal_wins' do
+  describe '#diagonal_moves' do
+    subject(:diagonal) { described_class.new(new_board) }
+    let(:new_board) { instance_double(Board) }
+    
     context '' do
-      xit '' do
+      xit 'returns an array of moves to be checked' do
+
       end
     end
   end
