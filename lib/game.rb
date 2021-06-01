@@ -2,13 +2,14 @@
 
 require_relative 'board.rb'
 
+
 class Game
+
+
   def initialize(game_board = Board.new)
     @game_board = game_board
-    @both_diagonals = []
     @player_turn = 1
-    @x_win = "\"x\", \"x\", \"x\", \"x\""
-    @y_win = "\"y\", \"y\", \"y\", \"y\""
+    @player = 0
   end
 
   def player_selection
@@ -37,26 +38,7 @@ class Game
     @game_board.display_board
     @player_turn == 1 ? @player_turn = 2 : @player_turn = 1
   end
-
-  def winning_combo
-   
-    row_win_check
-    column_win_check
-    diagonal_win_check
-  end
-
-  def diagonal_wins
-    padding = [*0..(@game_board.board.length - 1)].map { |i| [nil] * i }
-
-    padded_left = padding.reverse.zip(@game_board.board).zip(padding).map(&:flatten)
-
-    padded_right = padding.zip(@game_board.board).zip(padding.reverse).map(&:flatten)
-
-    diagonal_left = padded_left.transpose.map(&:compact)
-    diagonal_right = padded_right.transpose.map(&:compact)
-
-    @both_diagonals = diagonal_left, diagonal_right
-  end
+  
 
   def play_game
     @game_board.display_board
@@ -64,49 +46,19 @@ class Game
     loop do
      player_selection
      insert_circle
-     winning_combo
+     @game_board.winning_combo
     end
   end
 
-  private
 
-  def row_win_check
-    @game_board.board.each do |row|
-      if row.to_s.include? (@x_win)
-        puts "Player 1 wins"
-        exit
-      elsif row.to_s.include? (@y_win)
-        puts "Player 2 wins"
-        exit
-      end
-    end
-  end
-
-  def column_win_check
-    @game_board.board.transpose.each do |column|
-      if column.to_s.include? (@x_win)
-        puts "Player 1 wins"
-        exit
-      elsif column.to_s.include? (@y_win)
-        puts "Player 2 wins"
-        exit
-      end
-    end
-  end
-
-  def diagonal_win_check
-    diagonal_wins
-
-    @both_diagonals.each do |diagonal|
-      if diagonal.to_s.include? (@x_win)
-        puts "Player 1 wins"
-        exit
-      elsif diagonal.to_s.include? (@y_win)
-        puts "Player 2 wins"
-        exit
-      end
-    end
-  end
 
 end
 
+# test = Game.new
+# puts test.valid_vertical_move
+
+# if test.valid_vertical_move == nil
+#   puts "nil"
+# else
+#   puts "not nil"
+# end

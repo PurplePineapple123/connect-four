@@ -34,29 +34,23 @@ describe Game do
   end
 
   describe '#valid_vertical_move' do
-
     subject(:valid_move) { described_class.new(new_board) }
-    let(:new_board) {instance_double(Board)}
+    let(:new_board) {double('new_board', :board => [['x', 'x', 'x', 'x', '.', '.', '.'], 
+      ['y', '.', '.', '.', '.', '.', '.'], ['y', '.', '.', '.', '.', '.', '.'], 
+      ['y', '.', '.', '.', '.', '.', '.'], ['x', '.', '.', '.', '.', '.', '.'], 
+      ['x', '.', '.', '.', '.', '.', '.']])}
 
     context 'when a valid move is placed' do
 
       before do
-
-        board = [['x', '.', '.', '.', '.', '.', '.'], ['x', '.', '.', '.', '.', '.', '.'],
-        ['x', '.', '.', '.', '.', '.', '.'], ['x', '.', '.', '.', '.', '.', '.'],
-        ['x', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.']]
-
-        allow(new_board).to receive(:board).and_return(board)
-
-
-        allow(valid_move).to receive(:player_selection).and_return(1)
+        valid_move.instance_variable_set(:@player, 1)
       end
 
-      it 'does not receive error message' do
-        expect(valid_move).not_to receive(:puts)
-        valid_move.valid_vertical_move
+      xit 'does not receive error message' do
+       expect(valid_move.valid_vertical_move).to receive(:player_selection)
+       valid_move.valid_vertical_move
+      end
       
-      end
     end
   end
 
@@ -74,23 +68,73 @@ describe Game do
 
     context 'when player adds the  piece to column' do
       it 'game changes turn to next player' do
-        next_turn = insert_piece.insert_circle 
+        next_turn = insert_piece.insert_circle
         expect(next_turn).to eq(2)
       end
     end
   end
 
-  describe '#diagonal_moves' do
-    subject(:diagonal) { described_class.new(new_board) }
-    let(:new_board) { instance_double(Board) }
-    
-    context '' do
-      xit 'returns an array of moves to be checked' do
+  # describe '#diagonal_moves' do
+  #   subject(:diagonal) { described_class.new(new_board) }
+  #   let(:new_board) { instance_double(Board) }
 
+  #   context 'when player adds to board' do
+  #     before do
+  #       board = Array.new(6) { Array.new(['.', '.', '.', '.', '.', '.', '.']) }
+  #       allow(new_board).to receive(:board).and_return(board)
+  #     end
+  #     xit 'returns an array of diagonal moves to be checked' do
+  #       diagonal_array = diagonal.diagonal_moves.class
+  #       expect(diagonal_array).to eq Array
+  #     end
+  #   end
+  # end
+
+
+  describe '#row_win_check' do
+    context 'when 4 Xs in a row' do
+      
+      xit 'player 1 wins' do
       end
     end
   end
 
+
+  # describe '#row_win_check' do
+    
+
+  #   context 'when 4 Xs in a row' do
+  #     subject(:diagonal) { described_class.new(new_board) }
+  #   let(:new_board) { instance_double(Board) }
+  #     before do
+  #       board = [['x', 'x', 'x', 'x', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.'],
+  #       ['.', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.'],
+  #       ['.', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.']]
+  #       allow(new_board).to receive(:board).and_return(board)
+  #     end
+
+  #     it 'player 1 wins' do
+  #       win_message = 'Player 1 wins'
+  #       win_check = diagonal.row_win_check
+  #       expect(win_check).to receive(:puts).with(win_message)  
+  #     end
+  #   end
+
+  #   context 'when not a winning move' do
+  #     before do
+  #       board = [['x', '.', 'x', 'x', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.'],
+  #       ['.', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.'],
+  #       ['.', '.', '.', '.', '.', '.', '.'], ['.', '.', '.', '.', '.', '.', '.']]
+  #       allow(new_board).to receive(:board).and_return(board)
+  #     end
+
+  #     it 'does not declare a winner' do
+  #       win_message = 'Player 1 wins'
+  #       win_check = diagonal.row_win_check
+  #       expect(win_check).not_to receive(:puts).with(win_message)  
+  #     end
+  #   end
+  # end
 
 
 end

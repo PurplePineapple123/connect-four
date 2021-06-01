@@ -40,7 +40,6 @@ class Game
   end
 
   def winning_combo
-   
     row_win_check
     column_win_check
     diagonal_win_check
@@ -50,7 +49,6 @@ class Game
     padding = [*0..(@game_board.board.length - 1)].map { |i| [nil] * i }
 
     padded_left = padding.reverse.zip(@game_board.board).zip(padding).map(&:flatten)
-
     padded_right = padding.zip(@game_board.board).zip(padding.reverse).map(&:flatten)
 
     diagonal_left = padded_left.transpose.map(&:compact)
@@ -69,7 +67,7 @@ class Game
     end
   end
 
-  private
+  #private
 
   def row_win_check
     @game_board.board.each do |row|
